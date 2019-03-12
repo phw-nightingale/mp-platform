@@ -34,9 +34,9 @@ export default {
 .container {
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 200rpx 0;
   box-sizing: border-box;
 }

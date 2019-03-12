@@ -2,12 +2,16 @@
   "pages": [
     "pages/index/main",
     "pages/logs/main",
-    "pages/counter/main"
+    "pages/counter/main",
+    "pages/login/main",
+    "pages/wanted/main",
+    "pages/course/main",
+    "pages/bbs/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarBackgroundColor": "#00E9A3",
+    "navigationBarTitleText": "毕业生之家",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -22,10 +26,20 @@
       "iconPath": "static/tabs/home.png",
       "selectedIconPath": "static/tabs/home-active.png"
     }, {
-      "text": "订单",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
+      "text": "教程",
+      "pagePath": "pages/course/main",
+      "iconPath": "static/tabs/course.png",
+      "selectedIconPath": "static/tabs/course-active.png"
+    }, {
+      "text": "招聘",
+      "pagePath": "pages/wanted/main",
+      "iconPath": "static/tabs/wanted.png",
+      "selectedIconPath": "static/tabs/wanted-active.png"
+    }, {
+      "text": "论坛",
+      "pagePath": "pages/bbs/main",
+      "iconPath": "static/tabs/bbs.png",
+      "selectedIconPath": "static/tabs/bbs-active.png"
     }],
 
     "items": [{
@@ -34,10 +48,20 @@
       "icon": "static/tabs/home.png",
       "activeIcon": "static/tabs/home-active.png"
     }, {
-      "name": "订单",
-      "pagePath": "pages/logs/main",
-      "icon": "static/tabs/orders.png",
-      "activeIcon": "static/tabs/orders-active.png"
+      "name": "教程",
+      "pagePath": "pages/course/main",
+      "icon": "static/tabs/course.png",
+      "activeIcon": "static/tabs/course-active.png"
+    }, {
+      "name": "招聘",
+      "pagePath": "pages/wanted/main",
+      "icon": "static/tabs/wanted.png",
+      "activeIcon": "static/tabs/wanted-active.png"
+    }, {
+      "name": "论坛",
+      "pagePath": "pages/bbs/main",
+      "icon": "static/tabs/bbs.png",
+      "activeIcon": "static/tabs/bbs-active.png"
     }],
     "position": "bottom"
   }

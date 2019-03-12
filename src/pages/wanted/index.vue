@@ -1,15 +1,6 @@
 <template>
   <div class="container">
-    <swiper indicator-dots="true"
-           interval="5000"
-           autoplay="true"
-           duration="500"
-           class="banner">
 
-      <swiper-item v-for="(item, index) in topNews" :key="item" :item-id="index">
-        <a href="../logs/main"><div>{{item}}</div></a>
-      </swiper-item>
-    </swiper>
   </div>
 </template>
 
@@ -23,8 +14,7 @@ export default {
       userInfo: {
         nickName: 'mpvue',
         avatarUrl: 'http://mpvue.com/assets/logo.png'
-      },
-      topNews: [1, 2, 3]
+      }
     }
   },
 
@@ -55,8 +45,54 @@ export default {
 </script>
 
 <style scoped>
-  .banner {
-    width: 100%;
-    height: 200rpx;
-  }
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 150px;
+}
+
+.form-control {
+  display: block;
+  padding: 0 12px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+}
+.all{
+  width:7.5rem;
+  height:1rem;
+  background-color:blue;
+}
+.all:after{
+  display:block;
+  content:'';
+  clear:both;
+}
+.left{
+  float:left;
+  width:3rem;
+  height:1rem;
+  background-color:red;
+}
+
+.right{
+  float:left;
+  width:4.5rem;
+  height:1rem;
+  background-color:green;
+}
 </style>
