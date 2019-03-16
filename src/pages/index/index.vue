@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import card from '@/components/card'
+  import userservice from "../../apis/user";
 
-export default {
+  export default {
   data () {
     return {
       motto: 'Hello miniprograme',
@@ -29,7 +29,7 @@ export default {
   },
 
   components: {
-    card
+
   },
 
   methods: {
@@ -50,6 +50,7 @@ export default {
   created () {
     // let app = getApp()
     let that = this
+    userservice.login({phone: '17776304754', password: '199798'})
   }
 }
 </script>
