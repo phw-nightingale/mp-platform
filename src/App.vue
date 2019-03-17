@@ -34,10 +34,10 @@ export default {
 .container {
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 200rpx 0;
+  padding: 0.5rem 0;
   box-sizing: border-box;
 }
 /* this rule will be remove */

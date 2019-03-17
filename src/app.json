@@ -6,7 +6,9 @@
     "pages/login/main",
     "pages/wanted/main",
     "pages/course/main",
-    "pages/bbs/main"
+    "pages/bbs/main",
+    "pages/register/main",
+    "pages/repass/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

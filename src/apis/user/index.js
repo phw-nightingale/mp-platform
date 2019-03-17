@@ -2,31 +2,52 @@ import fly from "../../utils/fly";
 
 export default {
 
-  async login(user) {
-    const sessionKey = mpvue.getStorageSync('session_key')
-    if (typeof sessionKey !== 'undefined' && sessionKey.length !== 0) {
-      user.wxToken = sessionKey;
-    } else {
-
-    await mpvue.login({
-        timeout: 5000,
-        success(res) {
-          if (res.code) {
-            user.str1 = res.code;
-          }
+  login(user) {
+    return new Promise((resolve, reject) => {
+      if (typeof user === 'undefined' || user === null) {
+        const sessionKey = mpvue.getStorageSync('session_key')
+        console.log(sessionKey)
+        if (typeof sessionKey !== 'undefined' && sessionKey.length !== 0) {
+          console.log('session_key登录')
+          user = {}
+          user.wxToken = sessionKey;
+          fly.post("/api/sign-in", user).then(result => {
+            console.log(result.data);
+            mpvue.setStorage({key: 'session_key', data: result.data.wxToken});
+            resolve(result.data)
+          }).catch(err => {
+            reject('登录失败:' + err)
+          });
+        } else {
+          reject('参数无效')
         }
-      });
-    }
-    console.log(user)
-    // fly.post("/api/sign-in", user).then(result => {
-    //   console.log(result.data);
-    //   mpvue.setStorage({key: 'session_key', data: result.wxToken});
-    //   mpvue.showToast({title: '登录成功', icon: 'none'})
-    //   mpvue.switchTab({url: '../../pages/index/main'})
-    // }).catch(err => {
-    //   console.log(err)
-    //   mpvue.showToast({title: '登录失败:' + err, icon: 'none'})
-    // });
+      } else {
+        if (Object.keys(user).length === 0) {
+          reject('请输入手机号和密码')
+        }
+        const phone = user.phone;
+        const password = user.password
+        if (phone.length === 0 || password.length === 0) {
+          reject('请输入手机号和密码')
+        }
+        console.log('手机号登录')
+        mpvue.login({
+          timeout: 5000,
+          success(res) {
+            if (res.code) {
+              user.str1 = res.code;
+              fly.post("/api/sign-in", user).then(result => {
+                console.log(result.data);
+                mpvue.setStorage({key: 'session_key', data: result.data.wxToken});
+                resolve(result.data)
+              }).catch(err => {
+                reject('登录失败：' + err)
+              });
+            }
+          }
+        });
+      }
+    })
   },
 
   logout() {
