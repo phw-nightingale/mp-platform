@@ -1,4 +1,6 @@
 <script>
+  import userservice from './apis/user'
+
 export default {
   created () {
     // 调用API从本地缓存中获取数据
@@ -9,7 +11,7 @@ export default {
      * 百度：mpvue === swan, mpvuePlatform === 'swan'
      * 支付宝(蚂蚁)：mpvue === my, mpvuePlatform === 'my'
      */
-
+    let that = this
     let logs
     if (mpvuePlatform === 'my') {
       logs = mpvue.getStorageSync({key: 'logs'}).data || []
@@ -23,6 +25,15 @@ export default {
       logs.unshift(Date.now())
       mpvue.setStorageSync('logs', logs)
     }
+
+    //登录服务器
+    userservice.login()
+      .then(resolved => {
+        that.globalData.user = resolved
+        mpvue.switchTab({url: '../index/main'})
+      })
+      .catch(err => console.log(err))
+
   },
   log () {
     console.log(`log at:${Date.now()}`)
@@ -46,5 +57,16 @@ export default {
   -moz-transition: width 2s;
   -webkit-transition: width 2s;
   -o-transition: width 2s;
+}
+
+.weui-search-bar {
+  background-color: #00E9A3 !important;
+  border-top: 1rpx solid #00E9A3 !important;
+  border-bottom: 1rpx solid #00E9A3 !important;
+}
+
+.weui-search-bar__cancel-btn {
+  color: #666 !important;
+  font-size: 32rpx;
 }
 </style>
