@@ -16,36 +16,49 @@
                   @blur="onSearchBlur" @focus="onSearchFocus" @confirm="onSearchConfirm"></mp-searchbar>
 
     <i-tabs :current="current_scroll" scroll @change="onChangeScroll" color="#00E9A3">
-      <i-tab key="tab1" title="选项1"></i-tab>
-      <i-tab key="tab2" title="选项2"></i-tab>
-      <i-tab key="tab3" title="选项3"></i-tab>
-      <i-tab key="tab4" title="选项4"></i-tab>
-      <i-tab key="tab5" title="选项5"></i-tab>
-      <i-tab key="tab6" title="选项6"></i-tab>
-      <i-tab key="tab7" title="选项7"></i-tab>
-      <i-tab key="tab8" title="选项8"></i-tab>
-      <i-tab key="tab9" title="选项9"></i-tab>
+      <i-tab v-for="(item, idx) in menuTabs" :key="idx" :title="item"></i-tab>
     </i-tabs>
 
     <div class="container">
+      <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
     </div>
   </div>
 </template>
 
 <script>
-  import mpSearchbar from "mpvue-weui/src/searchbar";
+  import mpSearchbar from 'mpvue-weui/src/searchbar'
+  import listItem from '../../components/list-item'
 
   export default {
     data() {
       return {
         keywords: '',
-        current_scroll: 'tab1',
-        menuTabs: []
+        current_scroll: 0,
+        menuTabs: ['选项1','选项2','选项3','选项4','选项5','选项6','选项7'],
+        items: [
+          {
+            id: 1,
+            title: '测试新闻',
+            createTime: '2016-9-9',
+            company: 'phw',
+            isHot: 1,
+            headImages: ['../../static/images/user.png', '../../static/images/user.png', '../../static/images/user.png']
+          },
+          {
+            id: 2,
+            title: '测试新闻',
+            createTime: '2016-9-9',
+            company: 'phw',
+            isHot: 1,
+            headImages: ['../../static/images/user.png', '../../static/images/user.png']
+          }
+        ]
       };
     },
 
     components: {
-      mpSearchbar
+      mpSearchbar,
+      listItem
     },
 
     methods: {
@@ -87,9 +100,16 @@
 </script>
 
 <style scoped>
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20rpx;
+    width: 100%;
+  }
   .banner {
     width: 100%;
     height: 200rpx;
   }
+
 
 </style>

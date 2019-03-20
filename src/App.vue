@@ -32,7 +32,7 @@ export default {
         that.globalData.user = resolved
         mpvue.switchTab({url: '../index/main'})
       })
-      .catch(err => console.log(err))
+      .catch(() => mpvue.redirectTo({url: '../../pages/login/main'}))
 
   },
   log () {

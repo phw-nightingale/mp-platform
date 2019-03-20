@@ -8,7 +8,8 @@
     "pages/course/main",
     "pages/bbs/main",
     "pages/register/main",
-    "pages/repass/main"
+    "pages/repass/main",
+    "pages/item/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
