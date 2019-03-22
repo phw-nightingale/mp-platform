@@ -34,6 +34,16 @@ export default {
       })
       .catch(() => mpvue.redirectTo({url: '../../pages/login/main'}))
 
+    //登录微信
+    mpvue.getUserInfo({
+      success(e) {
+        that.globalData.wxUser = JSON.parse(e.rawData)
+      },
+      fail() {
+        mpvue.redirectTo({url: '../../pages/login/main'})
+      }
+    })
+
   },
   log () {
     console.log(`log at:${Date.now()}`)

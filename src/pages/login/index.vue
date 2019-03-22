@@ -2,16 +2,15 @@
   <div class="container">
     <i-input class="input" @change="onPhoneChange" v-model="user.phone" type="number" mode="wrapped" maxlength="11" placeholder="输入手机号"/>
     <i-input class="input" @change="onPassChange" v-model="user.password" type="password" mode="wrapped" maxlength="11" placeholder="输入密码"/>
-    <i-button @click="onLoginClick" class="input" type="success" shape="circle" size="middle">进入</i-button>
+    <i-button @click="onLoginClick" class="input" type="success" shape="circle" size="middle" open-type="getUserInfo" @getuserinfo="onGetUserInfo">进入</i-button>
     <div class="href-container"><a href="../register/main">立即注册</a>&nbsp;&nbsp; | &nbsp;&nbsp;<a href="../repass/main">忘记密码？</a></div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-import userservice from '@/apis/user'
+  import userservice from "@/apis/user";
 
-export default {
+  export default {
   data () {
     return {
       user: {},
@@ -34,6 +33,9 @@ export default {
         mpvue.showToast({title: '登录成功', icon: 'none'})
         mpvue.switchTab({url: '../index/main'})
       }).catch(err => mpvue.showToast({title: '错误: ' + err, icon: 'none'}))
+    },
+    onGetUserInfo(e) {
+      this.globalData.wxUser = JSON.parse(e.target.rawData)
     }
   },
 

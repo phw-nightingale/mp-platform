@@ -1,18 +1,6 @@
 <template>
   <div>
-    <!--<swiper indicator-dots="true"-->
-    <!--interval="5000"-->
-    <!--autoplay="true"-->
-    <!--duration="500"-->
-    <!--class="banner">-->
-
-    <!--<swiper-item v-for="(item, index) in topNews" :key="item" :item-id="index">-->
-    <!--<a href="../logs/main">-->
-    <!--<div>{{item}}</div>-->
-    <!--</a>-->
-    <!--</swiper-item>-->
-    <!--</swiper>-->
-    <mp-searchbar :isFocus=true v-model="keywords" :inputValue="keywords" :placeholder="placeholder" @input="onKeywordInput"
+    <mp-searchbar :isFocus=false v-model="keywords" :inputValue="keywords" :placeholder="placeholder" @input="onKeywordInput"
                   @blur="onSearchBlur" @focus="onSearchFocus" @confirm="onSearchConfirm"></mp-searchbar>
 
     <i-tabs :current="current_scroll" scroll @change="onChangeScroll" color="#00E9A3">
@@ -22,12 +10,14 @@
     <div class="container">
       <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
     </div>
+    <i-load-more tip="没有更多了" :loading="isLoad" />
   </div>
 </template>
 
 <script>
   import mpSearchbar from 'mpvue-weui/src/searchbar'
   import listItem from '../../components/list-item'
+  import courseservice from '../../apis/course'
 
   export default {
     data() {
@@ -52,7 +42,8 @@
             isHot: 1,
             headImages: ['../../static/images/user.png', '../../static/images/user.png']
           }
-        ]
+        ],
+        isLoad: false
       };
     },
 
@@ -106,10 +97,4 @@
     padding: 20rpx;
     width: 100%;
   }
-  .banner {
-    width: 100%;
-    height: 200rpx;
-  }
-
-
 </style>

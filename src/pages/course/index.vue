@@ -1,96 +1,93 @@
 <template>
-  <div class="container"></div>
+  <div>
+    <i-tabs :current="current_scroll" scroll @change="onChangeScroll" color="#00E9A3">
+      <i-tab v-for="(item, idx) in menuTabs" :key="idx" :title="item"></i-tab>
+    </i-tabs>
+    <swiper indicator-dots="true"
+            interval="5000"
+            autoplay="true"
+            duration="500"
+            class="banner">
+
+      <swiper-item v-for="(item, index) in topNews" :key="item" :item-id="index">
+        <a href="../logs/main">
+          <div>{{item}}</div>
+        </a>
+      </swiper-item>
+    </swiper>
+    <div class="container">
+      <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
+    </div>
+    <i-load-more tip="没有更多了" :loading="isLoad" />
+  </div>
 </template>
 
 <script>
-import card from '@/components/card'
+  import listItem from "../../components/list-item";
 
-export default {
-  data () {
-    return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
-    }
-  },
+  export default {
+    data() {
+      return {
+        current_scroll: 0,
+        menuTabs: ['选项1','选项2','选项3','选项4'],
+        topNews: [1, 2, 3, 4],
+        items: [
+          {
+            id: 1,
+            title: "测试新闻",
+            createTime: "2016-9-9",
+            company: "phw",
+            isHot: 1,
+            headImages: ["../../static/images/user.png", "../../static/images/user.png", "../../static/images/user.png"]
+          },
+          {
+            id: 2,
+            title: "测试新闻",
+            createTime: "2016-9-9",
+            company: "phw",
+            isHot: 1,
+            headImages: ["../../static/images/user.png", "../../static/images/user.png"]
+          }
+        ],
+        isLoad: false
+      };
+    },
 
-  components: {
-    card
-  },
+    components: {
+      listItem
+    },
 
-  methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
+    methods: {
+      bindViewTap() {
+        const url = "../logs/main";
+        if (mpvuePlatform === "wx") {
+          mpvue.switchTab({ url });
+        } else {
+          mpvue.navigateTo({ url });
+        }
+      },
+      clickHandle(ev) {
+        console.log("clickHandle:", ev);
+        // throw {message: 'custom test'}
       }
     },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
-  },
 
-  created () {
-    // let app = getApp()
-    let that = this
-  }
-}
+    created() {
+      // let app = getApp()
+      let that = this;
+    }
+  };
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
-}
+  .banner {
+    width: 100%;
+    height: 300rpx;
+  }
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20rpx;
+    width: 100%;
+  }
 </style>
