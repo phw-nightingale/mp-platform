@@ -10,8 +10,10 @@
             class="banner">
 
       <swiper-item v-for="(item, index) in topNews" :key="item" :item-id="index">
-        <a href="../logs/main">
-          <div>{{item}}</div>
+        <a href="../logs/main" style="width: 100%; height: 300rpx;">
+          <div class="top-container" :style="'background-image: url(' + item.headImages[0] + ')'">
+            <h3 style="margin-left: 20rpx;">{{item.title}}</h3>
+          </div>
         </a>
       </swiper-item>
     </swiper>
@@ -23,7 +25,8 @@
 </template>
 
 <script>
-  import listItem from "../../components/list-item";
+  import listItem from '../../components/list-item'
+  import courseservice from '../../apis/course'
 
   export default {
     data() {
@@ -69,12 +72,17 @@
       clickHandle(ev) {
         console.log("clickHandle:", ev);
         // throw {message: 'custom test'}
+      },
+      onChangeScroll(e) {
+        this.current_scroll = e.target.key
       }
     },
 
     created() {
       // let app = getApp()
       let that = this;
+      courseservice.getListByPage({page: 1, limit: 10})
+        .then(res => {that.items = res.list;that.topNews = res.list})
     }
   };
 </script>
@@ -89,5 +97,14 @@
     align-items: flex-start;
     padding: 20rpx;
     width: 100%;
+  }
+  .top-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
+    height: 300rpx;
+    background: #eee center center no-repeat;
+    background-size: cover;
   }
 </style>

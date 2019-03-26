@@ -1,16 +1,25 @@
 <template>
   <!-- 一般新闻模板 -->
-  <div v-if="tempType === 1" class="item-container-1">
+  <div v-if="tempType === 0" class="item-container-1">
     <a class="title" :href="'../item/main?id=' + item.id">{{item.title}}</a>
     <div class="item-content-1">
       <i-tag
         v-if="item.isHot === 1"
-        style="font-size: 32rpx; margin-right: 10rpx;"
+        style="font-size: 32rpx; margin-right: 20rpx;"
         class="i-tags"
         name="置顶"
         type="border"
         color="red">
         置顶
+      </i-tag>
+      <i-tag
+        v-if="isShowTag"
+        style="font-size: 32rpx; margin-right: 20rpx;"
+        class="i-tags"
+        :name="item.str2"
+        type="border"
+        color="red">
+        {{item.str2}}
       </i-tag>
       <span class="info">{{item.company}}</span>
       <span class="info">0评论</span>
@@ -23,40 +32,58 @@
       <div class="item-content-1">
         <i-tag
           v-if="item.isHot === 1"
-          style="font-size: 32rpx; margin-right: 10rpx;"
+          style="font-size: 32rpx; margin-right: 20rpx;"
           class="i-tags"
           name="置顶"
           type="border"
           color="red">
           置顶
         </i-tag>
-        <span class="info">0评论</span>
-        <span class="info">{{item.createTime}}</span>
+        <i-tag
+          v-if="isShowTag"
+          style="font-size: 32rpx; margin-right: 20rpx;"
+          class="i-tags"
+          name="置顶"
+          type="border"
+          color="red">
+          {{item.str2}}
+        </i-tag>
+        <span class="info" style="margin-right: 20rpx;">0评论</span>
+        <span class="info" style="margin-right: 20rpx;">{{item.createTime}}</span>
       </div>
     </section>
-    <section class="con-r">
+    <section class="con-r" :style="headImages[0]">
     </section>
   </div>
   <div v-else-if="tempType === 3" class="item-container-3">
     <a class="title" :href="'../item/main?id=' + item.id">{{item.title}}</a>
     <div class="img-container">
-      <div class="img" :style="headImage[0]"></div>
-      <div class="img" :style="headImage[1]"></div>
-      <div class="img" :style="headImage[2]"></div>
+      <div class="img" :style="headImages[0]"></div>
+      <div class="img" :style="headImages[1]"></div>
+      <div class="img" :style="headImages[2]"></div>
     </div>
-    <div class="item-content-1" style="margin-top: 10rpx;">
+    <div class="item-content-1" style="margin-top: 10rpx; margin-right: 10rpx;">
       <i-tag
         v-if="item.isHot === 1"
-        style="font-size: 32rpx; margin-right: 10rpx;"
+        style="font-size: 32rpx; margin-right: 20rpx;"
         class="i-tags"
         name="标签一"
         type="border"
         color="red">
         置顶
       </i-tag>
-      <span class="info">{{item.company}}</span>
-      <span class="info">2533评论</span>
-      <span class="info">{{item.createTime}}</span>
+      <i-tag
+        v-if="isShowTag"
+        style="font-size: 32rpx; margin-right: 20rpx;"
+        class="i-tags"
+        name="置顶"
+        type="border"
+        color="red">
+        {{item.str2}}
+      </i-tag>
+      <span class="info" style="margin-left: 0;">{{creator}}</span>
+      <span class="info" style="margin-left: 20rpx;">2533评论</span>
+      <span class="info" style="margin-left: 20rpx;">{{item.createTime}}</span>
     </div>
   </div>
 </template>
@@ -65,7 +92,7 @@
   export default {
     data() {
       return {
-        headImage: [
+        headImages: [
           "background-image: url('../../static/images/user.png')",
           "background-image: url('../../static/images/user.png')",
           "background-image: url('../../static/images/user.png')"
@@ -73,6 +100,18 @@
       }
     },
     computed: {
+      creator() {
+        const item = this.item
+        return typeof item.company === 'undefined' ? item.createUser : item.company
+      },
+      isShowTag() {
+        const tag = this.item.str2
+        if (typeof tag === 'undefined' || tag === null || tag.length === 0) {
+          return false
+        } else {
+          return true
+        }
+      }
     },
     props: {
       tempType: {
@@ -82,6 +121,14 @@
       item: {
         type: Object,
         required: true
+      }
+    },
+    created() {
+      console.log('list-item')
+      let headImages = this.item.headImages
+      for (const idx in headImages) {
+        console.log(headImages[idx])
+        this.headImages[idx] = "background-image: url('" + headImages[idx] + "')"
       }
     }
 
@@ -106,8 +153,9 @@
     width: 33%;
     height: 100%;
     padding: 5rpx;
-    background: center center no-repeat;
-    background-size: contain;
+    background: #eee center center no-repeat;
+    background-size: cover;
+    margin: 5rpx;
   }
 
   .item-container-1 {
@@ -129,7 +177,7 @@
   .info {
     font-size: 26rpx;
     color: #666;
-    margin: 0 10rpx;
+    margin-top: 15rpx;
   }
 
   .item-container-2 {
@@ -143,7 +191,7 @@
   }
 
   .item-container-3 {
-    height: 230rpx;
+    height: 300rpx;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -163,7 +211,7 @@
   .con-r {
     width: 30%;
     height: 100%;
-    background: url('../../static/images/user.png') center center no-repeat;
+    background: center center no-repeat;
     background-size: cover;
   }
 

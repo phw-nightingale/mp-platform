@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-  ]
+
   </div>
 </template>
 
@@ -11,9 +11,7 @@
       return {
 
       }
-    },
-
-
+    }
 
   };
 </script>

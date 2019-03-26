@@ -86,6 +86,8 @@
     created() {
       let app = getApp();
       let that = this;
+      courseservice.getListByPage({page: 1, limit: 10})
+        .then(res => that.items = res.list)
     }
   };
 </script>

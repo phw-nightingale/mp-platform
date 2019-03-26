@@ -9,7 +9,8 @@
     "pages/bbs/main",
     "pages/register/main",
     "pages/repass/main",
-    "pages/item/main"
+    "pages/item/main",
+    "pages/mine/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,6 +44,11 @@
       "pagePath": "pages/bbs/main",
       "iconPath": "static/tabs/bbs.png",
       "selectedIconPath": "static/tabs/bbs-active.png"
+    }, {
+      "text": "我的",
+      "pagePath": "pages/mine/main",
+      "iconPath": "static/tabs/mine.png",
+      "selectedIconPath": "static/tabs/mine-active.png"
     }],
 
     "items": [{
@@ -65,6 +71,11 @@
       "pagePath": "pages/bbs/main",
       "icon": "static/tabs/bbs.png",
       "activeIcon": "static/tabs/bbs-active.png"
+    }, {
+      "name": "我的",
+      "pagePath": "pages/mine/main",
+      "icon": "static/tabs/mine.png",
+      "activeIcon": "static/tabs/mine-active.png"
     }],
     "position": "bottom"
   }
