@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <section class="c-header">
-      <div class="c-header-1"></div>
+      <div class="c-header-1" :style="'background-image: url(' + wxUser.avatarUrl + ')'"></div>
       <div class="c-header-2">
-        <div class="c-un">夜莺</div>
+        <div class="c-un">{{wxUser.nickName}}</div>
         <div class="c-sign">
           放下执念，微笑现在。
         </div>
@@ -20,10 +20,10 @@
     <div class="line"></div>
 
     <i-cell-group class="cell">
-      <i-cell title="只显示箭头" is-link></i-cell>
-      <i-cell title="跳转到首页" is-link url="/pages/dashboard/index"></i-cell>
-      <i-cell title="只有 footer 点击有效" is-link url="/pages/dashboard/index" only-tap-footer></i-cell>
-      <i-cell title="开关">
+      <i-cell title="我的课程" is-link></i-cell>
+      <i-cell title="我的招聘" is-link url="/pages/dashboard/index"></i-cell>
+      <i-cell title="我的话题" is-link url="/pages/dashboard/index" only-tap-footer></i-cell>
+      <i-cell title="允许通知">
         <switch slot="footer" checked />
       </i-cell>
     </i-cell-group>
@@ -31,9 +31,9 @@
     <div class="line"></div>
 
     <i-cell-group class="cell">
-      <i-cell title="只显示箭头" is-link></i-cell>
-      <i-cell title="跳转到首页" is-link url="/pages/dashboard/index"></i-cell>
-      <i-cell title="只有 footer 点击有效" is-link url="/pages/dashboard/index" only-tap-footer></i-cell>
+      <i-cell title="我的评论" is-link></i-cell>
+      <i-cell title="留言板" is-link url="/pages/dashboard/index"></i-cell>
+      <i-cell title="关于..." is-link url="/pages/dashboard/index" only-tap-footer></i-cell>
     </i-cell-group>
 
     <div class="line-2"></div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import userservice from '../../apis/user'
 
 export default {
 
@@ -51,13 +52,23 @@ export default {
 
   data () {
     return {
-
+      wxUser: {}
     }
   },
 
   created () {
+    console.log('wxUser:', this.globalData.wxUser)
+    let that = this
+    if (!this.globalData.wxUser) {
+      userservice.getWxUserInfo()
+        .then(wxUser => {
+          that.wxUser = wxUser
+        })
+    } else {
+      that.wxUser = that.globalData.wxUser
+    }
+  },
 
-  }
 }
 </script>
 
@@ -79,7 +90,8 @@ export default {
     height: 150rpx;
     border-radius: 50%;
     margin-right: 20rpx;
-    background-color: #eeeeee;
+    background: #eee center center;
+    background-size: cover;
   }
 
   .c-header-2 {

@@ -14,7 +14,7 @@ export default {
         }
         for (const idx in list) {
           const item = list[idx]
-          console.log(item)
+          //console.log(item)
           if (item.header === null || item.header.length === 0) {
             continue;
           }

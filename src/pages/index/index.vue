@@ -10,7 +10,7 @@
     <div class="container">
       <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
     </div>
-    <i-load-more tip="没有更多了" :loading="isLoad" />
+    <i-load-more :tip="botTip" :loading="isLoad" />
   </div>
 </template>
 
@@ -18,6 +18,7 @@
   import mpSearchbar from 'mpvue-weui/src/searchbar'
   import listItem from '../../components/list-item'
   import courseservice from '../../apis/course'
+  import userservice from '../../apis/user'
 
   export default {
     data() {
@@ -25,6 +26,12 @@
         keywords: '',
         current_scroll: 0,
         menuTabs: ['选项1','选项2','选项3','选项4','选项5','选项6','选项7'],
+        botTip: '下拉加载更多',
+        page: {
+          page: 1,
+          limit: 5,
+          over: false
+        },
         items: [
           {
             id: 1,
@@ -66,7 +73,7 @@
         // throw {message: 'custom test'}
 
       },
-      onSearchBlur(e) {
+      onSearchBlur() {
         console.log(this.keywords)
       },
       onKeywordInput(e) {
@@ -86,8 +93,34 @@
     created() {
       let app = getApp();
       let that = this;
-      courseservice.getListByPage({page: 1, limit: 10})
+      courseservice.getListByPage(that.page)
         .then(res => that.items = res.list)
+
+      userservice.getWxUserInfo().then(res => console.log(res))
+    },
+
+    /**
+     * 下拉加载更多
+     */
+    onReachBottom() {
+      console.log('下拉加载更多...')
+      let that = this
+      that.page.page++
+      if (!that.page.over) {
+
+        courseservice.getListByPage(that.page)
+          .then(res => {
+            console.log(res)
+            if (res.list.length > 0) {
+              that.items = that.items.concat(res.list)
+            }
+            if (res.list.length < that.page.limit) {
+              that.botTip = '没有更多了';
+              that.page.over = true
+            }
+
+          })
+      }
     }
   };
 </script>

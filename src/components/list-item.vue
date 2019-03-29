@@ -124,10 +124,10 @@
       }
     },
     created() {
-      console.log('list-item')
+      //console.log('list-item')
       let headImages = this.item.headImages
       for (const idx in headImages) {
-        console.log(headImages[idx])
+        //console.log(headImages[idx])
         this.headImages[idx] = "background-image: url('" + headImages[idx] + "')"
       }
     }

@@ -50,10 +50,28 @@ export default {
     })
   },
 
+  getWxUserInfo() {
+    return new Promise((resolve, reject) => {
+      mpvue.getUserInfo({
+        success(res) {
+          //console.log('getWxUserInfo:', res)
+          if (res.errMsg === 'getUserInfo:ok') {
+            resolve(res.userInfo)
+          } else {
+            reject(res.errMsg)
+          }
+        },
+        fail(err) {
+          reject(err)
+        }
+      })
+    })
+  },
+
   logout() {
     return new Promise((resolve, reject) => {
 
-    });
+    })
   }
 
 
