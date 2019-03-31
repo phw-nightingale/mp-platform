@@ -6,7 +6,7 @@ export default {
     if (Object.keys(page).length === 0) {
       throw new Error('分页参数异常')
     } else {
-      let res = await fly.get('/api/courses?page=' + page.page + '&limit=' + page.limit)
+      let res = await fly.get('/api/courses', page)
       if (res.code === 200) {
         let list = res.data.list
         if (list.length === 0) {

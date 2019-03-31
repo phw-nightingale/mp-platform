@@ -38,7 +38,9 @@
         page: {
           page: 1,
           limit: 5,
-          over: false
+          over: false,
+          category: '',
+          orderBy: 'create_time'
         },
         items: [
           {
@@ -80,7 +82,15 @@
         // throw {message: 'custom test'}
       },
       onChangeScroll(e) {
+        let that = this
         this.current_scroll = e.target.key
+        that.page.page = 1
+        that.page.category = that.menuTabs[that.current_scroll]
+        console.log('page detail: ', that.page)
+        courseservice.getListByPage(that.page)
+          .then(res => {
+            that.items = res.list
+          })
       }
     },
 
