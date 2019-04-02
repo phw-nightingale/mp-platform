@@ -9,21 +9,22 @@ export default {
       let res = await fly.get('/api/courses', page)
       if (res.code === 200) {
         let list = res.data.list
-        if (list.length === 0) {
-          throw Error('没有数据')
-        }
-        for (const idx in list) {
-          const item = list[idx]
-          //console.log(item)
-          if (item.header === null || item.header.length === 0) {
-            continue;
+        if (list.length !== 0) {
+          for (let idx in list) {
+            const item = list[idx]
+            //console.log(item)
+            if (item.header === null || item.header.length === 0) {
+              continue;
+            }
+            item.headImages = item.header.split(';')
           }
-          item.headImages = item.header.split(';')
+          res.data.list = list
+          return res.data
+        } else {
+          return res.data
         }
-        res.data.list = list
-        return res.data
       } else {
-        throw Error(res.message)
+        throw Error(res.msg)
       }
     }
   }

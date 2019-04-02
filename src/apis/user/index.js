@@ -68,11 +68,20 @@ export default {
     })
   },
 
+  async getCreateUser(userid) {
+    let res = await fly.get('/api/users/' + userid)
+    if (res.code === 200) {
+      return res.data
+    } else {
+      throw Error(res.msg)
+    }
+  },
+
+
   logout() {
     return new Promise((resolve, reject) => {
 
     })
   }
-
 
 };

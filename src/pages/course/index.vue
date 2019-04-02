@@ -33,32 +33,32 @@
       return {
         current_scroll: 0,
         menuTabs: ['选项1','选项2','选项3','选项4'],
-        topNews: [1, 2, 3, 4],
+        topNews: [],
         botTip: '下拉加载更多',
         page: {
           page: 1,
           limit: 5,
           over: false,
-          category: '',
+          categoryId: 1,
           orderBy: 'create_time'
         },
         items: [
-          // {
-          //   id: 1,
-          //   title: "测试新闻",
-          //   createTime: "2016-9-9",
-          //   company: "phw",
-          //   isHot: 1,
-          //   headImages: ["../../static/images/user.png", "../../static/images/user.png", "../../static/images/user.png"]
-          // },
-          // {
-          //   id: 2,
-          //   title: "测试新闻",
-          //   createTime: "2016-9-9",
-          //   company: "phw",
-          //   isHot: 1,
-          //   headImages: ["../../static/images/user.png", "../../static/images/user.png"]
-          // }
+          {
+            id: 1,
+            title: "新闻标题",
+            createTime: "2016-9-9",
+            company: "phw",
+            isHot: 1,
+            headImages: ["../../static/images/user.png", "../../static/images/user.png", "../../static/images/user.png"]
+          },
+          {
+            id: 2,
+            title: "新闻标题",
+            createTime: "2016-9-9",
+            company: "phw",
+            isHot: 1,
+            headImages: ["../../static/images/user.png", "../../static/images/user.png"]
+          }
         ],
         isLoad: false
       };
@@ -95,10 +95,13 @@
     },
 
     created() {
-      // let app = getApp()
+      let app = getApp()
       let that = this;
       courseservice.getListByPage(that.page)
-        .then(res => {that.items = res.list;that.topNews = res.list})
+        .then(res => {
+          that.items = res.list;
+          that.topNews = res.list
+        })
     },
 
     /**
@@ -107,12 +110,12 @@
     onReachBottom() {
       console.log('下拉加载更多...')
       let that = this
-      that.page.page++
       if (!that.page.over) {
-
+        that.page.page++
+        that.isLoad = true
         courseservice.getListByPage(that.page)
           .then(res => {
-            console.log(res)
+            console.log('onGetListByPage:', res)
             if (res.list.length > 0) {
               that.items = that.items.concat(res.list)
             }
@@ -120,7 +123,7 @@
               that.botTip = '没有更多了';
               that.page.over = true
             }
-
+            that.isLoad = false
           })
       }
     }
