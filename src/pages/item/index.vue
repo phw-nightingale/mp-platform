@@ -6,14 +6,16 @@
       &nbsp;&nbsp;
       <span>{{detail.createTime}}</span>
       &nbsp;&nbsp;
-      <span>{{detail.category}}</span>
+      <span>{{detail.category === null ? '' : detail.category}}</span>
     </div>
     <div class="content" v-html="detail.content">
 
     </div>
     <div class="review">
-      <review-item></review-item>
+      <review-item v-for="(item, idx) in reviewList" :key="idx" :review="item"></review-item>
+      <i-load-more :tip="botTip" :loading="isLoad" />
     </div>
+
   </div>
 </template>
 
@@ -24,9 +26,13 @@ import reviewService from '../../apis/review'
 import reviewItem from '../../components/review-item'
 
 export default {
+
   data () {
     return {
-      detail: {}
+      detail: {},
+      reviewList: [],
+      botTip: '没有更多了',
+      isLoad: false
     }
   },
 
@@ -51,10 +57,11 @@ export default {
           .then(res => {
             that.detail = res
             reviewService.getReviewList(params.target, params.id)
-              .then(rep => console.log('onReviewListLoadComplete: ', rep))
-              .catch(err => console.log('Error occurred in onReviewListLoad: ', err))
+              .then(rep => {
+                that.reviewList = rep
+                console.log('onReviewListLoadComplete: ', rep)
+              })
           })
-          .catch(err => console.log(err))
 
         break;
       case 'topic':
@@ -62,13 +69,15 @@ export default {
           .then(res => {
             that.detail = res
             reviewService.getReviewList(params.target, params.id)
-              .then(rep => console.log('onReviewListLoadComplete: ', rep))
-              .catch(err => console.log('Error occurred in onReviewListLoad: ', err))
+              .then(rep => {
+                that.reviewList = rep
+                console.log('onReviewListLoadComplete: ', rep)
+              })
           })
-          .catch(err => console.log(err))
 
         break;
       default:
+        console.log('Unknown target: ', params.target)
         break;
     }
   }
@@ -97,5 +106,12 @@ export default {
   .content {
     width: 100%;
     font-size: 36rpx;
+    overflow: hidden;
   }
+
+  .review {
+    width: 100%;
+    margin-top: 20rpx;
+  }
+
 </style>

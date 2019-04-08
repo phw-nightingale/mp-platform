@@ -20,7 +20,10 @@
     <div class="container">
       <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
     </div>
-    <i-load-more :tip="botTip" :loading="isLoad" />
+    <div style="width: 100%;">
+     <i-load-more :tip="botTip" :loading="isLoad" />
+    </div>
+    <hover-toolbar />
   </div>
 </template>
 
@@ -28,6 +31,8 @@
   import listItem from '../../components/list-item'
   import courseservice from '../../apis/course'
   import categoryService from '../../apis/category'
+  import hoverToolbar from '../../components/hoverToolbar'
+
 
   export default {
     data() {
@@ -66,7 +71,7 @@
     },
 
     components: {
-      listItem
+      listItem, hoverToolbar
     },
 
     methods: {
