@@ -4,7 +4,7 @@
                   @blur="onSearchBlur" @focus="onSearchFocus" @confirm="onSearchConfirm"></mp-searchbar>
 
     <i-tabs :current="current_scroll" scroll @change="onChangeScroll" color="#00E9A3">
-      <i-tab v-for="(item, idx) in menuTabs" :key="idx" :title="item"></i-tab>
+      <i-tab v-for="(item, idx) in menuTabs" :key="idx" :title="item.name"></i-tab>
     </i-tabs>
 
     <div class="container">
@@ -19,13 +19,15 @@
   import listItem from '../../components/list-item'
   import courseservice from '../../apis/course'
   import userservice from '../../apis/user'
+  import categoryService from '../../apis/category'
+  import hoverToolbar from '../../components/hoverToolbar'
 
   export default {
     data() {
       return {
         keywords: '',
         current_scroll: 0,
-        menuTabs: ['选项1','选项2','选项3','选项4','选项5','选项6','选项7'],
+        menuTabs: [],
         botTip: '下拉加载更多',
         page: {
           page: 1,
@@ -86,7 +88,15 @@
 
       },
       onChangeScroll(e) {
+        let that = this
         this.current_scroll = e.target.key
+        that.page.page = 1
+        that.page.categoryId = that.menuTabs[that.current_scroll].id
+        console.log('page detail: ', that.page)
+        courseservice.getListByPage(that.page)
+          .then(res => {
+            that.items = res.list
+          })
       }
     },
 
@@ -96,7 +106,11 @@
       courseservice.getListByPage(that.page)
         .then(res => that.items = res.list)
 
-      userservice.getWxUserInfo().then(res => console.log(res))
+      //获取当前用户
+      //userservice.getWxUserInfo().then(res => console.log(res))
+      //获取所有二级目录
+      categoryService.get2rdCategories()
+        .then(res => that.menuTabs = res)
     },
 
     /**

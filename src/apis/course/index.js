@@ -13,6 +13,7 @@ export default {
           for (let idx in list) {
             const item = list[idx]
             //console.log(item)
+            item.target = 'course'
             if (item.header === null || item.header.length === 0) {
               continue;
             }
@@ -26,6 +27,15 @@ export default {
       } else {
         throw Error(res.msg)
       }
+    }
+  },
+
+  async getCourseById(id) {
+    let res = await fly.get('/api/courses/' + id)
+    if (res.code === 200) {
+      return res.data
+    } else {
+      throw Error(res.msg)
     }
   }
 

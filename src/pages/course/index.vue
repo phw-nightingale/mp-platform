@@ -1,7 +1,7 @@
 <template>
   <div>
     <i-tabs :current="current_scroll" scroll @change="onChangeScroll" color="#00E9A3">
-      <i-tab v-for="(item, idx) in menuTabs" :key="idx" :title="item"></i-tab>
+      <i-tab v-for="(item, idx) in menuTabs" :key="idx" :title="item.name"></i-tab>
     </i-tabs>
     <swiper indicator-dots="true"
             interval="5000"
@@ -27,6 +27,7 @@
 <script>
   import listItem from '../../components/list-item'
   import courseservice from '../../apis/course'
+  import categoryService from '../../apis/category'
 
   export default {
     data() {
@@ -39,7 +40,7 @@
           page: 1,
           limit: 5,
           over: false,
-          categoryId: 1,
+          categoryId: 4,
           orderBy: 'create_time'
         },
         items: [
@@ -85,7 +86,7 @@
         let that = this
         this.current_scroll = e.target.key
         that.page.page = 1
-        that.page.category = that.menuTabs[that.current_scroll]
+        that.page.categoryId = that.menuTabs[that.current_scroll].id
         console.log('page detail: ', that.page)
         courseservice.getListByPage(that.page)
           .then(res => {
@@ -102,6 +103,13 @@
           that.items = res.list;
           that.topNews = res.list
         })
+
+      categoryService.getCategories({pid: 1})
+        .then(res => {
+          console.log('onCourseGetCategories: ', res)
+          that.menuTabs = res
+        })
+
     },
 
     /**

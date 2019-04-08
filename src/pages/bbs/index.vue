@@ -32,6 +32,10 @@ export default {
     }
   },
 
+  compute: {
+    
+  },
+
   components: {
     topicItem
   },

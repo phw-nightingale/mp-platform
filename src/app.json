@@ -10,7 +10,8 @@
     "pages/register/main",
     "pages/repass/main",
     "pages/item/main",
-    "pages/mine/main"
+    "pages/mine/main",
+    "pages/detail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

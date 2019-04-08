@@ -1,98 +1,101 @@
 <template>
   <div class="container">
+    <div class="title">{{detail.title}}</div>
+    <div class="info">
+      <span>{{detail.createUser}}</span>
+      &nbsp;&nbsp;
+      <span>{{detail.createTime}}</span>
+      &nbsp;&nbsp;
+      <span>{{detail.category}}</span>
+    </div>
+    <div class="content" v-html="detail.content">
 
+    </div>
+    <div class="review">
+      <review-item></review-item>
+    </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
+import courseService from '../../apis/course'
+import topicService from '../../apis/topic'
+import reviewService from '../../apis/review'
+import reviewItem from '../../components/review-item'
 
 export default {
   data () {
     return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
+      detail: {}
     }
   },
 
   components: {
-    card
+    reviewItem
   },
 
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
-      }
-    },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
+
   },
 
   created () {
     // let app = getApp()
     let that = this
+  },
+
+  onLoad(params) {
+    let that = this
+    switch (params.target) {
+      case 'course':
+        courseService.getCourseById(params.id)
+          .then(res => {
+            that.detail = res
+            reviewService.getReviewList(params.target, params.id)
+              .then(rep => console.log('onReviewListLoadComplete: ', rep))
+              .catch(err => console.log('Error occurred in onReviewListLoad: ', err))
+          })
+          .catch(err => console.log(err))
+
+        break;
+      case 'topic':
+        topicService.getTopicById(params.id)
+          .then(res => {
+            that.detail = res
+            reviewService.getReviewList(params.target, params.id)
+              .then(rep => console.log('onReviewListLoadComplete: ', rep))
+              .catch(err => console.log('Error occurred in onReviewListLoad: ', err))
+          })
+          .catch(err => console.log(err))
+
+        break;
+      default:
+        break;
+    }
   }
 }
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .container {
+    padding: 20rpx;
+  }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
+  .title {
+    width: 100%;
+    font-size: 48rpx;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+  }
 
-.userinfo-nickname {
-  color: #aaa;
-}
+  .info {
+    width: 100%;
+    font-size: 28rpx;
+    color: #666;
+    margin-bottom: 20rpx;
+  }
 
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
-}
+  .content {
+    width: 100%;
+    font-size: 36rpx;
+  }
 </style>

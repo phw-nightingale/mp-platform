@@ -30,6 +30,10 @@
       topic: {
         type: Object,
         required: true
+      },
+      style: {
+        type: String,
+        required: false
       }
     },
 
@@ -56,8 +60,8 @@
     width: 100%;
     justify-content: space-between;
     align-items: flex-start;
-    border-top: #aaaaaa 1rpx solid;
-    border-bottom: #aaaaaa 1rpx solid;
+    border-top: 1rpx solid #aaa;
+
   }
 
   .title {
