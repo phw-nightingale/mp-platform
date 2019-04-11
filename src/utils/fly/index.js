@@ -3,7 +3,7 @@ import qs from 'qs'
 
 const fly = new Fly()
 
-const host = 'http://192.168.0.102:8080'
+const host = 'http://127.0.0.1:8080'
 
 fly.config.baseURL = host
 fly.config.timeout = 5000

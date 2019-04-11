@@ -11,7 +11,8 @@
     "pages/repass/main",
     "pages/item/main",
     "pages/mine/main",
-    "pages/detail/main"
+    "pages/detail/main",
+    "pages/edit/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
