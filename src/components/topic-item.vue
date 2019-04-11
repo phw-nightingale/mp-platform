@@ -1,6 +1,8 @@
 <template>
   <div class="container">
+    <a :href="'../item/main?id=' + topic.id + '&target=topic'">
     <div class="title">{{topic.title}}</div>
+    </a>
     <div class="bot-cont">
       <div class="cont-l">
         <img class="header" :src="headImage" alt=""> &nbsp;&nbsp;

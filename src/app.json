@@ -12,7 +12,8 @@
     "pages/item/main",
     "pages/mine/main",
     "pages/detail/main",
-    "pages/edit/main"
+    "pages/edit/main",
+    "pages/addreview/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

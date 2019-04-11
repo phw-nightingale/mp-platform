@@ -10,7 +10,7 @@
             class="banner">
 
       <swiper-item v-for="(item, index) in topNews" :key="item" :item-id="index">
-        <a href="../logs/main" style="width: 100%; height: 300rpx;">
+        <a href="../logs/main?target=course" style="width: 100%; height: 300rpx;">
           <div class="top-container" :style="'background-image: url(' + item.headImages[0] + ')'">
             <h3 style="margin-left: 20rpx;">{{item.title}}</h3>
           </div>
@@ -23,7 +23,7 @@
     <div style="width: 100%;">
      <i-load-more :tip="botTip" :loading="isLoad" />
     </div>
-    <hover-toolbar />
+    <hover-toolbar url="../../pages/edit/main?target=course" />
   </div>
 </template>
 

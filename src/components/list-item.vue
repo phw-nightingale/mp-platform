@@ -1,7 +1,7 @@
 <template>
   <!-- 一般新闻模板 -->
   <div v-if="tempType === 0" class="item-container-1">
-    <a class="title" :href="'../item/main?id=' + item.id">{{item.title}}</a>
+    <a class="title" :href="'../item/main?id=' + item.id + '&target=' + item.target">{{item.title}}</a>
     <div class="item-content-1">
       <i-tag
         v-if="item.isHot === 1"

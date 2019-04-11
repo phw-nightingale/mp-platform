@@ -15,7 +15,7 @@
       <review-item v-for="(item, idx) in reviewList" :key="idx" :review="item"></review-item>
       <i-load-more :tip="botTip" :loading="isLoad" />
     </div>
-
+    <hover-toobar :url="'../../pages/addreview/main?targetId=' + detail.id + '&target=' + target"></hover-toobar>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ import courseService from '../../apis/course'
 import topicService from '../../apis/topic'
 import reviewService from '../../apis/review'
 import reviewItem from '../../components/review-item'
+import hoverToobar from '../../components/hoverToolbar'
 
 export default {
 
@@ -32,12 +33,13 @@ export default {
       detail: {},
       reviewList: [],
       botTip: '没有更多了',
-      isLoad: false
+      isLoad: false,
+      target: ''
     }
   },
 
   components: {
-    reviewItem
+    reviewItem, hoverToobar
   },
 
   methods: {
@@ -51,6 +53,7 @@ export default {
 
   onLoad(params) {
     let that = this
+    that.target = params.target
     switch (params.target) {
       case 'course':
         courseService.getCourseById(params.id)

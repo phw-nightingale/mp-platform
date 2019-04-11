@@ -27,7 +27,7 @@ export default {
   },
 
   async getTopicById(id) {
-    let res = await fly.get('/api/courses/' + id)
+    let res = await fly.get('/api/topics/' + id)
     if (res.code === 200) {
       return res.data
     } else {

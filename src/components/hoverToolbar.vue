@@ -27,15 +27,14 @@
 
     methods: {
       handleShowBtnTap() {
-        let that = this
-        console.log('aaa');
-        if (that.isOpen) {
-          that.btnStyle = 'animation: btnRecovery 500ms;animation-fill-mode: forwards;'
-          that.isOpen = false
-        } else {
-          that.btnStyle = 'animation: btnRotate 500ms;animation-fill-mode: forwards;'
-          that.isOpen = true
-        }
+        // let that = this
+        // if (that.isOpen) {
+        //   that.btnStyle = 'animation: btnRecovery 500ms;animation-fill-mode: forwards;'
+        //   that.isOpen = false
+        // } else {
+        //   that.btnStyle = 'animation: btnRotate 500ms;animation-fill-mode: forwards;'
+        //   that.isOpen = true
+        // }
       }
     }
 
@@ -73,6 +72,7 @@
   .btn {
     height: 75rpx;
     width: 75rpx;
+    line-height: 75rpx;
     display: flex;
     align-items: center;
     justify-content: center;
