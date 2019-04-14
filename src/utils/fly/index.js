@@ -3,7 +3,7 @@ import qs from 'qs'
 
 const fly = new Fly()
 
-const host = 'http://127.0.0.1:8080'
+const host = 'https://four-road-titans.xyz'
 
 fly.config.baseURL = host
 fly.config.timeout = 5000
@@ -24,8 +24,9 @@ fly.interceptors.request.use(request => {
   }
 
   //添加token...
-
+  const token = mpvue.getStorageSync('session_key')
   request.headers = {
+    Authorization: token
   }
 
   return request

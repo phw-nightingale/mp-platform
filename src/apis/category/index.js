@@ -2,6 +2,10 @@ import fly from '../../utils/fly'
 
 export default {
 
+  /**
+   * 获得所有的2级类目
+   * @returns {Promise<Array>}
+   */
   async get2rdCategories() {
     let resp = await fly.get('/api/categories')
     if (resp.code === 200) {
@@ -27,6 +31,20 @@ export default {
       return resp.data.list
     } else {
       throw Error(resp.msg)
+    }
+  },
+
+  async get2rdCategoriesByName(name) {
+    if (!name) {
+      throw Error('name cannot be empty.')
+    } else {
+      let pcate = await fly.get('/api/categories/str1/' + name)
+        if (pcate.data.list.length > 0) {
+          let pid = pcate.data.list[0].id
+          let res = await fly.get('/api/categories/pid/' + pid)
+          return res.data.list
+        }
+
     }
   }
 

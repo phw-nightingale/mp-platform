@@ -8,7 +8,7 @@
     </i-tabs>
 
     <div class="container">
-      <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
+      <list-item v-for="item in items" :key="item.id" :item="item"></list-item>
     </div>
     <i-load-more :tip="botTip" :loading="isLoad" />
   </div>
@@ -18,9 +18,11 @@
   import mpSearchbar from 'mpvue-weui/src/searchbar'
   import listItem from '../../components/list-item'
   import courseservice from '../../apis/course'
+  import topicService from '../../apis/topic'
   import userservice from '../../apis/user'
   import categoryService from '../../apis/category'
   import hoverToolbar from '../../components/hoverToolbar'
+  import fly from '../../utils/fly'
 
   export default {
     data() {
@@ -62,19 +64,6 @@
     },
 
     methods: {
-      bindViewTap() {
-        const url = "../logs/main";
-        if (mpvuePlatform === "wx") {
-          mpvue.switchTab({ url });
-        } else {
-          mpvue.navigateTo({ url });
-        }
-      },
-      clickHandle(ev) {
-        console.log("clickHandle:", ev);
-        // throw {message: 'custom test'}
-
-      },
       onSearchBlur() {
         console.log(this.keywords)
       },
@@ -93,10 +82,44 @@
         that.page.page = 1
         that.page.categoryId = that.menuTabs[that.current_scroll].id
         console.log('page detail: ', that.page)
-        courseservice.getListByPage(that.page)
-          .then(res => {
-            that.items = res.list
-          })
+        // courseservice.getListByPage(that.page)
+        //   .then(res => {
+        //     if (res.list.length > 0) {
+        //       that.items = res.list
+        //     }
+        //   })
+        //
+        // topicService.getTopicList(that.page)
+        //   .then(res => {
+        //     if (res.list.length > 0) {
+        //       that.items = res.list
+        //     }
+        //   })
+
+        function getCourseList() {
+          return fly.get('/api/courses', that.page)
+        }
+
+        function getTopicList() {
+          return fly.get('/api/topics', that.page)
+        }
+
+        fly.all([getCourseList(), getTopicList()])
+          .then(fly.spread(function(courses, topics) {
+            if (courses.code === 200 && courses.data.list.length > 0) {
+              for (const idx in courses.data.list) {
+                courses.data.list[idx].target = 'course'
+              }
+              that.items = courses.data.list
+            } else if (topics.code === 200 && topics.data.list.length > 0) {
+              for (const idx in topics.data.list) {
+                topics.data.list[idx].target = 'topic'
+              }
+              that.items = topics.data.list
+            } else {
+              that.items = []
+            }
+          }))
       }
     },
 
@@ -119,20 +142,20 @@
     onReachBottom() {
       console.log('下拉加载更多...')
       let that = this
-      that.page.page++
       if (!that.page.over) {
+        that.page.page++
 
         courseservice.getListByPage(that.page)
           .then(res => {
-            console.log(res)
-            if (res.list.length > 0) {
+            let length = res.list.length
+            if (length > 0) {
               that.items = that.items.concat(res.list)
             }
-            if (res.list.length < that.page.limit) {
+            console.log('onReachBottom: ', length)
+            if (length < that.page.limit) {
               that.botTip = '没有更多了';
               that.page.over = true
             }
-
           })
       }
     }

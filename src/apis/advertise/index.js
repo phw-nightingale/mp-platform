@@ -1,18 +1,18 @@
-import fly from "../../utils/fly";
+import fly from '../../utils/fly'
 
 export default {
 
   async getListByPage(page) {
 
-    let res = await fly.get('/api/courses', page)
+    let res = await fly.get('/api/advertises', page)
     if (res.code === 200) {
       let list = res.data.list
       if (list.length !== 0) {
         for (let idx in list) {
           const item = list[idx]
           //console.log(item)
-          item.target = 'course'
-          if (item.header !== null) {
+          item.target = 'advertises'
+          if (item.header !== null && item.header.length !== 0) {
             item.headImages = item.header.split(';')
           }
         }
@@ -27,17 +27,8 @@ export default {
 
   },
 
-  async getCourseById(id) {
-    let res = await fly.get('/api/courses/' + id)
-    if (res.code === 200) {
-      return res.data
-    } else {
-      throw Error(res.msg)
-    }
-  },
-
-  async addCourse(course) {
-    let res = await fly.post('/api/courses', course)
+  async addAdvertise(advertise) {
+    let res = await fly.post('/api/advertises', advertise)
     mpvue.showToast({title: res.msg, icon: 'none'})
     return 'OK'
   }

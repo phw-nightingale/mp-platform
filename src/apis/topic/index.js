@@ -33,6 +33,11 @@ export default {
     } else {
       throw Error(res.msg)
     }
-  }
+  },
 
+  async addTopic(topic) {
+    let res = await flt.post('/api/topics', topic)
+    mpvue.showToast({title: res.msg, icon: 'none'})
+    return 'OK'
+  }
 }

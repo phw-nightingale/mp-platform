@@ -18,7 +18,7 @@
       </swiper-item>
     </swiper>
     <div class="container">
-      <list-item v-for="item in items" :key="item.id" :item="item" :temp-type="item.headImages.length"></list-item>
+      <list-item v-for="item in items" :key="item.id" :item="item"></list-item>
     </div>
     <div style="width: 100%;">
      <i-load-more :tip="botTip" :loading="isLoad" />
@@ -45,7 +45,6 @@
           page: 1,
           limit: 5,
           over: false,
-          categoryId: 4,
           orderBy: 'create_time'
         },
         items: [
@@ -75,18 +74,6 @@
     },
 
     methods: {
-      bindViewTap() {
-        const url = "../logs/main";
-        if (mpvuePlatform === "wx") {
-          mpvue.switchTab({ url });
-        } else {
-          mpvue.navigateTo({ url });
-        }
-      },
-      clickHandle(ev) {
-        console.log("clickHandle:", ev);
-        // throw {message: 'custom test'}
-      },
       onChangeScroll(e) {
         let that = this
         this.current_scroll = e.target.key
@@ -103,10 +90,14 @@
     created() {
       let app = getApp()
       let that = this;
+      console.log('onGetCourseListByPageResponse: ', '--------------------------------------')
       courseservice.getListByPage(that.page)
         .then(res => {
+          console.log('onGetCourseListByPageResponse: ', res)
           that.items = res.list;
-          that.topNews = res.list
+          for (let idx = 0; idx < 3; idx++) {
+            that.topNews[idx] = that.items[idx]
+          }
         })
 
       categoryService.getCategories({pid: 1})

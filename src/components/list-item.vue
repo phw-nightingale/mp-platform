@@ -1,6 +1,6 @@
 <template>
   <!-- 一般新闻模板 -->
-  <div v-if="tempType === 0" class="item-container-1">
+  <div v-if="headImages.length === 0" class="item-container-1">
     <a class="title" :href="'../item/main?id=' + item.id + '&target=' + item.target">{{item.title}}</a>
     <div class="item-content-1">
       <i-tag
@@ -26,7 +26,7 @@
       <span class="info">{{item.createTime}}</span>
     </div>
   </div>
-  <div v-else-if="tempType === 1 || tempType === 2" class="item-container-2">
+  <div v-else-if="headImages.length === 1 || headImages.length === 2" class="item-container-2">
     <section class="con-l">
       <a class="title" :href="'../item/main?id=' + item.id + '&target=' + item.target">{{item.title}}</a>
       <div class="item-content-1">
@@ -55,7 +55,7 @@
     <section class="con-r" :style="headImages[0]">
     </section>
   </div>
-  <div v-else-if="tempType === 3" class="item-container-3">
+  <div v-else-if="headImages.length === 3" class="item-container-3">
     <a class="title" :href="'../item/main?id=' + item.id">{{item.title}}</a>
     <div class="img-container">
       <div class="img" :style="headImages[0]"></div>
@@ -92,11 +92,7 @@
   export default {
     data() {
       return {
-        headImages: [
-          "background-image: url('../../static/images/user.png')",
-          "background-image: url('../../static/images/user.png')",
-          "background-image: url('../../static/images/user.png')"
-        ]
+        headImages: []
       }
     },
     computed: {
@@ -114,10 +110,6 @@
       }
     },
     props: {
-      tempType: {
-        type: String,
-        required: true
-      },
       item: {
         type: Object,
         required: true

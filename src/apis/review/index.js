@@ -9,6 +9,15 @@ export default {
     } else {
       throw Error(res.msg)
     }
+  },
+
+  async addReview(target, targetId, review) {
+    let res = await fly.post('/api/reviews/' + target + '/' + targetId, review)
+    if (res.code === 200) {
+      return res.data
+    } else {
+      throw Error(res.msg)
+    }
   }
 
 }
