@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a :href="'../item/main?id=' + topic.id + '&target=topic'">
+    <a :href="'../item/main?id=' + topic.id + '&target=' + topic.target">
     <div class="title">{{topic.title}}</div>
     </a>
     <div class="bot-cont">

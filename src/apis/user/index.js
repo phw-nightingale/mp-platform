@@ -77,6 +77,13 @@ export default {
     }
   },
 
+  async signUp(user) {
+    let res = await fly.post('/api/sign-up', user);
+    if (res.code === 200) {
+      return res.msg
+    }
+  },
+
 
   logout() {
     return new Promise((resolve, reject) => {

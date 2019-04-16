@@ -11,10 +11,7 @@ export default {
         for (let idx in list) {
           const item = list[idx]
           //console.log(item)
-          item.target = 'advertises'
-          if (item.header !== null && item.header.length !== 0) {
-            item.headImages = item.header.split(';')
-          }
+          item.target = 'advertise'
         }
         res.data.list = list
         return res.data
@@ -31,6 +28,15 @@ export default {
     let res = await fly.post('/api/advertises', advertise)
     mpvue.showToast({title: res.msg, icon: 'none'})
     return 'OK'
+  },
+
+  async getAdById(id) {
+    let res = await fly.get('/api/advertises/' + id)
+    if (res.code === 200) {
+      return res.data
+    } else {
+      throw Error(res.msg)
+    }
   }
 
 }

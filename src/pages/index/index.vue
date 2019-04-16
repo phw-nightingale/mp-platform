@@ -37,22 +37,7 @@
           over: false
         },
         items: [
-          {
-            id: 1,
-            title: '测试新闻',
-            createTime: '2016-9-9',
-            company: 'phw',
-            isHot: 1,
-            headImages: ['../../static/images/user.png', '../../static/images/user.png', '../../static/images/user.png']
-          },
-          {
-            id: 2,
-            title: '测试新闻',
-            createTime: '2016-9-9',
-            company: 'phw',
-            isHot: 1,
-            headImages: ['../../static/images/user.png', '../../static/images/user.png']
-          }
+
         ],
         isLoad: false
       };

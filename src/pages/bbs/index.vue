@@ -4,12 +4,14 @@
     <div style="width: 100%;">
       <i-load-more :tip="botTip" :loading="isLoad" />
     </div>
+    <hover-toolbar url="../../pages/edit/main?target=topic"></hover-toolbar>
   </div>
 </template>
 
 <script>
   import topicItem from '../../components/topic-item'
   import topicService from '../../apis/topic'
+  import hoverToolbar from '../../components/hoverToolbar'
 
 export default {
   data () {
@@ -33,11 +35,11 @@ export default {
   },
 
   compute: {
-    
+
   },
 
   components: {
-    topicItem
+    topicItem, hoverToolbar
   },
 
   methods: {

@@ -8,7 +8,7 @@
       &nbsp;&nbsp;
       <span>{{detail.category === null ? '' : detail.category}}</span>
     </div>
-    <div class="content" v-html="detail.content">
+    <div class="content" v-html="detail.content ? detail.content : detail.remark">
 
     </div>
     <div class="review">
@@ -25,6 +25,7 @@ import topicService from '../../apis/topic'
 import reviewService from '../../apis/review'
 import reviewItem from '../../components/review-item'
 import hoverToobar from '../../components/hoverToolbar'
+import advertiseService from '../../apis/advertise'
 
 export default {
 
@@ -46,6 +47,10 @@ export default {
 
   },
 
+  computed: {
+
+  },
+
   created () {
     // let app = getApp()
     let that = this
@@ -53,6 +58,8 @@ export default {
 
   onLoad(params) {
     let that = this
+    console.log('-------------------------------------------------------------')
+    console.log(params)
     that.target = params.target
     switch (params.target) {
       case 'course':
@@ -69,6 +76,19 @@ export default {
         break;
       case 'topic':
         topicService.getTopicById(params.id)
+          .then(res => {
+            that.detail = res
+            reviewService.getReviewList(params.target, params.id)
+              .then(rep => {
+                that.reviewList = rep
+                console.log('onReviewListLoadComplete: ', rep)
+              })
+          })
+
+        break;
+
+      case 'advertise':
+        advertiseService.getAdById(params.id)
           .then(res => {
             that.detail = res
             reviewService.getReviewList(params.target, params.id)
@@ -110,6 +130,11 @@ export default {
     width: 100%;
     font-size: 36rpx;
     overflow: hidden;
+  }
+
+  .content img {
+    text-align: center !important;
+    max-width: 100% !important;
   }
 
   .review {

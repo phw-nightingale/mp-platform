@@ -1,61 +1,60 @@
 <template>
-  <div>
-      <swiper v-if="imgUrls.length > 0" indidator-dots="imgUrls.length > 1" >
-      <block v-for="(item, index) in imgUrls" :key="index" >
-        <swiper-item>
-          <image :src="item" mode="scaleToFill"></image>
-        </swiper-item>
-      </block>
-    </swiper>
-
-    <ul class="container log-list">
-      <li v-for="(log, index) in logs" :class="{ red: aa }" :key="index" class="log-item">
-        <card :text="(index + 1) + ' . ' + log"></card>
-      </li>
-    </ul>
+  <div class="container">
+    <i-input class="input" @change="onUnChange" v-model="user.username" type="text" mode="wrapped" maxlength="11" placeholder="输入用户名"/>
+    <i-input class="input" @change="onPhoneChange" v-model="user.phone" type="number" mode="wrapped" maxlength="11" placeholder="输入手机号"/>
+    <i-input class="input" @change="onPassChange" v-model="user.password" type="password" mode="wrapped" maxlength="11" placeholder="输入密码"/>
+    <i-button @click="onLoginClick" class="input" type="success" shape="circle" size="middle" open-type="getUserInfo" @getuserinfo="onGetUserInfo">确认</i-button>
   </div>
 </template>
 
 <script>
-import { formatTime } from '@/utils/index'
-import card from '@/components/card'
+  import userService from "@/apis/user";
 
-export default {
-  components: {
-    card
-  },
+  export default {
+    data () {
+      return {
+        user: {},
+      }
+    },
 
-  data () {
-    return {
-      logs: [],
-      imgUrls: [
-        'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/newsPicture/05558951-de60-49fb-b674-dd906c8897a6',
-        'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/coursePicture/0fbcfdf7-0040-4692-8f84-78bb21f3395d',
-        'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/management-school-picture/7683b32e-4e44-4b2f-9c03-c21f34320870'
-      ]
+    components: {},
+
+    methods: {
+      onPhoneChange (ev) {
+        this.user.phone = ev.target.detail.value
+      },
+      onPassChange (ev) {
+        this.user.password = ev.target.detail.value
+      },
+      onUnChange(e) {
+        this.user.username = e.target.detail.value
+      },
+      onLoginClick() {
+        let that = this
+        userService.signUp(that.user)
+          .then(res => {
+            mpvue.showToast({title: res, icon: 'none'})
+            mpvue.redirectTo({url: '../login/main'})
+          })
+      },
+      onGetUserInfo(e) {
+        this.globalData.wxUser = JSON.parse(e.target.rawData)
+      }
+    },
+
+    created () {
+      // let app = getApp()
+      let that = this
     }
-  },
-
-  created () {
-    let logs
-    if (mpvuePlatform === 'my') {
-      logs = mpvue.getStorageSync({key: 'logs'}).data || []
-    } else {
-      logs = mpvue.getStorageSync('logs') || []
-    }
-    this.logs = logs.map(log => formatTime(new Date(log)))
   }
-}
 </script>
 
-<style>
-.log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
-}
+<style scoped>
+  .container {
+    padding: 2rem 0.5rem;
+  }
 
-.log-item {
-  margin: 10rpx;
-}
+  .input {
+    width: 100%;
+  }
 </style>

@@ -3,7 +3,7 @@
     <i-input class="input" @change="onPhoneChange" v-model="user.phone" type="number" mode="wrapped" maxlength="11" placeholder="输入手机号"/>
     <i-input class="input" @change="onPassChange" v-model="user.password" type="password" mode="wrapped" maxlength="11" placeholder="输入密码"/>
     <i-button @click="onLoginClick" class="input" type="success" shape="circle" size="middle" open-type="getUserInfo" @getuserinfo="onGetUserInfo">进入</i-button>
-    <div class="href-container"><a href="../register/main">立即注册</a>&nbsp;&nbsp; | &nbsp;&nbsp;<a href="../repass/main">忘记密码？</a></div>
+    <div class="href-container"><a href="../logs/main">立即注册</a>&nbsp;&nbsp; | &nbsp;&nbsp;<a href="../repass/main">忘记密码？</a></div>
   </div>
 </template>
 

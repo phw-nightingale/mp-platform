@@ -4,12 +4,14 @@
     <div style="width: 100%;">
       <i-load-more :tip="botTip" :loading="isLoad" />
     </div>
+    <hover-toolbar url="../../pages/edit/main?target=advertise"></hover-toolbar>
   </div>
 </template>
 
 <script>
   import topicItem from '../../components/topic-item'
-  import topicService from '../../apis/topic'
+  import advertiseService from '../../apis/advertise'
+  import hoverToolbar from '../../components/hoverToolbar'
 
 export default {
   data () {
@@ -37,7 +39,7 @@ export default {
   },
 
   components: {
-    topicItem
+    topicItem, hoverToolbar
   },
 
   methods: {
@@ -47,14 +49,15 @@ export default {
   created () {
     // let app = getApp()
     let that = this
-    console.log('onGetTopicListReady: ')
-    topicService.getTopicList(that.page)
+    console.log('onGetAdvertiseListReady: ')
+    advertiseService.getListByPage(that.page)
       .then(res => {
-        console.log('onGetTopicList: ', res)
+        console.log('onGetAdvertiseList: ', res)
         that.topicList = res.list
-        if (that.topicList.length === 0)  {
-          that.botTip = '空空如也'
-        }
+        console.log(res)
+        // if (that.topicList.length === 0)  {
+        //   that.botTip = '空空如也'
+        // }
       })
       .catch(err => console.error(err))
   }
